@@ -24,7 +24,7 @@ def download_SC(target, sectors, combine = True, folder ='', conv_to_mag = True,
     pdcsaps = []
     final_string = ''
     for sector in sectors:
-        data = lk.search_lightcurve(target , sector = sector, author = "SPOC").download()
+        data = lk.search_lightcurve(target , sector = sector, author = "SPOC", cadence = "short").download()
         sap = lk.LightCurve(time = data.time, flux= data.sap_flux, flux_err= data.sap_flux_err).remove_nans()
         pdcsap = lk.LightCurve(time = data.time, flux = data.pdcsap_flux, flux_err= data.pdcsap_flux_err).remove_nans()
 
