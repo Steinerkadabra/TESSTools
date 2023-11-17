@@ -3,7 +3,7 @@ import lightkurve as lk
 import numpy as np
 import matplotlib.pyplot as plt
 
-from tess_tools.utils.lc_convert import convert_to_mag
+from ..utils.lc_convert import convert_to_mag
 
 def download_SC(target, sectors, combine = True, folder ='', conv_to_mag = True, remove_mean = True):
     """
