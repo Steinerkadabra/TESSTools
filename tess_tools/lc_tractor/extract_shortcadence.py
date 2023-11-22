@@ -3,7 +3,7 @@ import lightkurve as lk
 import numpy as np
 import matplotlib.pyplot as plt
 
-from ..utils.lc_convert import convert_to_mag
+from ..utils.lc_utils import convert_to_mag
 
 def download_SC(target, sectors, combine = True, folder ='', conv_to_mag = True, remove_mean = True):
     """
@@ -24,7 +24,10 @@ def download_SC(target, sectors, combine = True, folder ='', conv_to_mag = True,
     pdcsaps = []
     final_string = ''
     for sector in sectors:
+        print(sector)
         data = lk.search_lightcurve(target , sector = sector, author = "SPOC", cadence = "short").download()
+        if not data:
+            continue
         sap = lk.LightCurve(time = data.time, flux= data.sap_flux, flux_err= data.sap_flux_err).remove_nans()
         pdcsap = lk.LightCurve(time = data.time, flux = data.pdcsap_flux, flux_err= data.pdcsap_flux_err).remove_nans()
 
