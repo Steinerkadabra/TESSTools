@@ -6,7 +6,7 @@ from scipy.interpolate import interp1d
 from scipy.signal import savgol_filter
 
 def binning(time, mag, period, num):
-    time = (time%period)/period# (1/0.5988495842998753)*0.5988495842998753
+    time = (time%period)/period
     bins = []
     means = []
     sds = []
@@ -30,15 +30,19 @@ def binning(time, mag, period, num):
 
 def phasefold_binning(folder, init_period = 5.0, period_change = 0.025, figsize = (10,6), invert_yaxis  = True, save_name = '', num_bins = 100,):
     count = 0
-    all_files = os.listdir(folder)
-    files = [file for file in all_files if file[-4:] == '.txt']
-    print('Choose from the available files for this folder:')
-    for file in files:
-        print(count, ')', file, '\n')
-        count += 1
-    x = input('Which file should be plotted?')
-    active_file = files[int(x)]
-    data = np.loadtxt(folder + '/' + active_file).T
+    if os.path.isfile(file):
+        data = np.loadtxt(file).T
+    else:
+        folder = file
+        all_files = os.listdir(folder)
+        files = [file for file in all_files if file[-4:] == '.txt']
+        print('Choose from the available files for this folder:')
+        for file in files:
+            print(count, ')', file, '\n')
+            count += 1
+        x = input('Which file should be plotted?')
+        active_file = files[int(x)]
+        data = np.loadtxt(folder + '/' + active_file).T
     lc = lk.LightCurve(data[0], data[1])
 
 
@@ -133,20 +137,20 @@ def phasefold_binning(folder, init_period = 5.0, period_change = 0.025, figsize 
 
 def phasefold_savgol(folder, init_period = 5.0, period_change = 0.025, figsize = (10,6), invert_yaxis  = True, save_name = '', savgol_window= 300, savgol_poly= 3):
     count = 0
-    all_files = os.listdir(folder)
-    files = [file for file in all_files if file[-4:] == '.txt']
-    print('Choose from the available files for this folder:')
-    for file in files:
-        print(count, ')', file, '\n')
-        count += 1
-    x = input('Which file should be plotted?')
-    active_file = files[int(x)]
-    data = np.loadtxt(folder + '/' + active_file).T
+    if os.path.isfile(file):
+        data = np.loadtxt(file).T
+    else:
+        folder = file
+        all_files = os.listdir(folder)
+        files = [file for file in all_files if file[-4:] == '.txt']
+        print('Choose from the available files for this folder:')
+        for file in files:
+            print(count, ')', file, '\n')
+            count += 1
+        x = input('Which file should be plotted?')
+        active_file = files[int(x)]
+        data = np.loadtxt(folder + '/' + active_file).T
     lc = lk.LightCurve(data[0], data[1])
-
-
-
-
     fig, ax = plt.subplots(figsize = figsize)
     folded_time = (lc.time.value%init_period)/init_period
     ax.plot(folded_time, lc.flux.value, 'ko', ms = 1)

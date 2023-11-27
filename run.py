@@ -1,5 +1,5 @@
 from tess_tools.lc_tractor.extract_shortcadence import download_SC
-# from tess_tools.lc_tractor.extract_longcadence import get_lc_from_FFI
+from tess_tools.lc_tractor.extract_longcadence import get_lc_from_FFI
 from tess_tools.lc_interact.plot_lc import plot_lc
 from tess_tools.lc_interact.phasephold_lc import phasefold_savgol
 
