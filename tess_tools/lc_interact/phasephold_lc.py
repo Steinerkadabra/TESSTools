@@ -28,10 +28,15 @@ def binning(time, mag, period, num):
 
 
 
-def phasefold_binning(folder, init_period = 5.0, period_change = 0.025, figsize = (10,6), invert_yaxis  = True, save_name = '', num_bins = 100,):
+def phasefold_binning(file, init_period = 5.0, period_change = 0.025, figsize = (10,6), invert_yaxis  = True, save_name = '', num_bins = 100,):
     count = 0
     if os.path.isfile(file):
         data = np.loadtxt(file).T
+        folder = ""
+        for dirs in file.split("/")[:-1]:
+            folder += dirs
+            folder += "/"
+        active_file = file.split("/")[-1]
     else:
         folder = file
         all_files = os.listdir(folder)
@@ -135,10 +140,15 @@ def phasefold_binning(folder, init_period = 5.0, period_change = 0.025, figsize 
 
 
 
-def phasefold_savgol(folder, init_period = 5.0, period_change = 0.025, figsize = (10,6), invert_yaxis  = True, save_name = '', savgol_window= 300, savgol_poly= 3):
+def phasefold_savgol(file, init_period = 5.0, period_change = 0.025, figsize = (10,6), invert_yaxis  = True, save_name = '', savgol_window= 300, savgol_poly= 3):
     count = 0
     if os.path.isfile(file):
         data = np.loadtxt(file).T
+        folder = ""
+        for dirs in file.split("/")[:-1]:
+            folder += dirs
+            folder += "/"
+        active_file = file.split("/")[-1]
     else:
         folder = file
         all_files = os.listdir(folder)
